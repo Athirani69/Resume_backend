@@ -1,7 +1,31 @@
 const express=require("express")
 const resumeRoute=express.Router()
 const rsModel=require("../module/resumeModel")
+const bcrypt=require("bcryptjs")
 
-resumeRoute.post("/signup",(req,res)=>{
-  res.send("hy")
+hashPasswordGenerator=async(password)=>{
+    const salt=await bcrypt.genSalt(10)
+    return bcrypt.hash(password,salt)
+}
+
+resumeRoute.post("/signup",async(req,res)=>{
+  let{data}={"data":req.body}
+  let pass=req.body.pass
+  hashPasswordGenerator(pass).then(
+    (hashedPassword)=>{
+        console.log(hashedPassword)
+        data.pass=hashedPassword
+        console.log(data)
+        let resobj=new rsModel(data)
+        let result=resobj.save()
+        res.json(
+            {
+                status:"added"
+            }
+        )
+    }
+  )
 })
+
+
+module.exports=resumeRoute;
