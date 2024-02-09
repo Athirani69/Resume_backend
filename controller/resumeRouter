@@ -1,0 +1,7 @@
+const express=require("express")
+const resumeRoute=express.Router()
+const rsModel=require("../module/resumeModel")
+
+resumeRoute.post("/signup",(req,res)=>{
+  res.send("hy")
+})
