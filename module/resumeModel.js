@@ -5,7 +5,8 @@ const reSchema=new mongoose.Schema(
         name:String,
         mob:String,
         email:String,
-        address:String
+        address:String,
+        pass:String
     }
 )
 
